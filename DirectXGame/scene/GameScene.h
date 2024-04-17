@@ -7,6 +7,7 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
+#include "DebugCamera.h"
 
 /// <summary>
 /// ゲームシーン
@@ -28,7 +29,7 @@ public: // メンバ関数
 	/// 初期化
 	/// </summary>
 	void Initialize();
-
+	
 	/// <summary>
 	/// 毎フレーム処理
 	/// </summary>
@@ -36,6 +37,7 @@ public: // メンバ関数
 
 	/// <summary>
 	/// 描画
+	Sprite* sprite_ = nullptr;
 	/// </summary>
 	void Draw();
 
@@ -47,4 +49,21 @@ private: // メンバ変数
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
+	
+	///テクスチャハンドル
+	uint32_t textureHandle_ = 0;
+	uint32_t soundDataHandle_ = 0;
+	uint32_t voiceHandle_ = 0;
+
+	//3dモデル
+	Model* model_ = nullptr;
+
+	WorldTransform worldTransform_;
+	ViewProjection viewProjection_;
+
+	//gui
+	float inputFloat3[3] = {0, 0, 0};
+
+	//デバッグカメラ
+	DebugCamera* debugCamera_ = nullptr;
 };

@@ -8,10 +8,6 @@
 #include "WinApp.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
-<<<<<<< HEAD
-//テスト
-=======
->>>>>>> ec00eb92037cafd0a932cc9eb6abcb66344ec854
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	WinApp* win = nullptr;
 	DirectXCommon* dxCommon = nullptr;

@@ -7,6 +7,9 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
+#include "Player.h"
+#include <vector>
+#include "DebugCamera.h"
 
 /// <summary>
 /// ゲームシーン
@@ -48,6 +51,20 @@ private: // メンバ変数
 	/// ゲームシーン用
 	/// </summar
 
-
+//テクスチャ
+	uint32_t textureHandle_ = 0;
 	
+	Model* model_ = nullptr;
+	Model* block_ = nullptr; 
+	ViewProjection viewProjection_;
+
+	Player* player_ = nullptr;
+	
+	std::vector<std::vector<WorldTransform*>> worldTransformBlocks_;
+
+	//デバックカメラ
+	bool isDebugCameraActive_ = false;
+
+	DebugCamera* debugCamera_ = nullptr;
+
 };

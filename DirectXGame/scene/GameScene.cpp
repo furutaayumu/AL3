@@ -13,6 +13,8 @@ GameScene::~GameScene() {
 	delete player_;
 	delete block_;
 	delete debugCamera_;
+	delete tenkyu_;
+	delete modelSkydome_;
 
 for (std::vector<WorldTransform*>& worldTransformBlockLine : worldTransformBlocks_) {
 		for (WorldTransform* worldTransformBlcok : worldTransformBlockLine) {
@@ -38,6 +40,10 @@ void GameScene::Initialize() {
 	viewProjection_.Initialize();
 
 	block_ = Model::CreateFromOBJ("cube");
+
+	tenkyu_ = new Tenkyu();
+	tenkyu_->Initialize(model_,textureHandle_,&viewProjection_);
+	modelSkydome_ = Model::CreateFromOBJ("SkyDome", true);
 
 	//ブロック
 	const uint32_t kNumBlockVirtical = 10;
@@ -93,6 +99,8 @@ void GameScene::Update() { player_->Update();
 	}
 
 	debugCamera_->Update();
+
+	tenkyu_->Updata();
 }
 
 void GameScene::Draw() {
@@ -131,6 +139,7 @@ void GameScene::Draw() {
 		}
 	}
 	player_->Draw();
+	tenkyu_->Draw();
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion

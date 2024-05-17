@@ -11,4 +11,4 @@ void Tenkyu::Initialize(Model* model, uint32_t textureHandle, ViewProjection* vi
 
 void Tenkyu::Updata() { worldTransform_.TransferMatrix(); }
 
-void Tenkyu::Draw() { model_->Draw(worldTransform_, *viewProjection_, TextureHandle_); }
+void Tenkyu::Draw() { model_->Draw(worldTransform_, *viewProjection_); }

@@ -14,7 +14,6 @@ GameScene::~GameScene() {
 	delete block_;
 	delete debugCamera_;
 	delete tenkyu_;
-	delete modelSkydome_;
 
 for (std::vector<WorldTransform*>& worldTransformBlockLine : worldTransformBlocks_) {
 		for (WorldTransform* worldTransformBlcok : worldTransformBlockLine) {
@@ -42,8 +41,9 @@ void GameScene::Initialize() {
 	block_ = Model::CreateFromOBJ("cube");
 
 	tenkyu_ = new Tenkyu();
-	tenkyu_->Initialize(model_,textureHandle_,&viewProjection_);
 	modelSkydome_ = Model::CreateFromOBJ("SkyDome", true);
+	tenkyu_->Initialize(modelSkydome_,textureHandle_,&viewProjection_);
+	
 
 	//ブロック
 	const uint32_t kNumBlockVirtical = 10;

@@ -10,6 +10,7 @@
 #include "Player.h"
 #include <vector>
 #include "DebugCamera.h"
+#include "Tenkyu.h"
 
 /// <summary>
 /// ゲームシーン
@@ -59,6 +60,9 @@ private: // メンバ変数
 	ViewProjection viewProjection_;
 
 	Player* player_ = nullptr;
+
+	Tenkyu* tenkyu_ = nullptr;
+	Model* modelSkydome_ = nullptr;
 	
 	std::vector<std::vector<WorldTransform*>> worldTransformBlocks_;
 

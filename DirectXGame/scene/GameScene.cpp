@@ -80,6 +80,7 @@ void GameScene::Update() { player_->Update();
 
 			worldTransformBlock->matWorld_ = matWorld;
 			worldTransformBlock->TransferMatrix();
+			worldTransformBlock->UpdataMatrix();
 		}
 	}
 	#ifdef _DEBUG

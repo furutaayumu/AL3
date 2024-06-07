@@ -2,6 +2,9 @@
 #include <cstdint>
 #include <map>
 #include <string>
+#include <fstream>
+#include <sstream>
+#include <cassert>
 
 void MapChipField::ResetMapChipData() { 
     mapChipData_.data.clear();
@@ -14,20 +17,42 @@ void MapChipField::ResetMapChipData() {
 void MapChipField::LoadMapChipCsv(const std::string& filePath) {
 	ResetMapChipData();
 	std::ifstream file;
-	/*assert(file.is_open());*/
-
+	assert(file.is_open());
+	 
 	std::stringstream mapChipCsv;
 	mapChipCsv << file.rdbuf();
 
 	file.close();
+
+	for (uint32_t i = 0; i < kNumBlockVirtical; ++i) {
+		std::string line;
+		getline(mapChipCsv, line);
+		std::istringstream line_stream(line);
+
+		for (uint32_t j = 0; j < kNumBlockHorizontal; ++j) {
+			std::string word;
+			getline(line_stream, word, ',');
+
+			if (mapChipTable.contains(word)) {
+				mapChipData_.data[i][j] = mapChipTable[word];
+			}
+		}
+	}
 }
 
-//サイズ
-static inline const float kBlockWidth = 1.0f;
-static inline const float kBlockHeight = 1.0f;
-//個数
-static inline const uint32_t kNumBlockVirtical = 20;
-static inline const uint32_t kNumBlockHorizontal = 100;
+MapChipType MapChipField::GetMapChipTypeByIndex(xindex, yIndex) {
+	if (xIndex < 0 || kNumBlockHorizontal - 1 < xIndex) {
+		return MapChipType::kBlank;
+	}
+	if (yIndex < 0 || kNumBlockVirtical - 1 < yIndex) {
+		return MapChipType::kBlank;
+	}
+	return mapChipData_.data[yIndex][xIndex];
+}
+
+
+
+
 
 namespace {
 std::map<std::string, MapChipType> mapChipTable = {

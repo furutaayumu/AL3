@@ -26,17 +26,22 @@ for (std::vector<WorldTransform*>& worldTransformBlockLine : worldTransformBlock
 }
 
 void GameScene::Initialize() {
+
+	mapChipField_ = new MapChipField;
+	mapChipField_->LoadMapChipCsv("Resources/blocks.csv");
+
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
-	model_ = Model::Create();
+	model_ = Model::CreateFromOBJ("player", true);
 
 	debugCamera_ = new DebugCamera(1280, 720);
 	//テクスチャ
 	textureHandle_ = TextureManager::Load("20191124120148.jpg");
 	//自機
+	Vector3 PlayerPotision = mapChipField_->GetMapChipPositionByIndex(3,18);
 	player_ = new Player();
-	player_->Initialize(model_,textureHandle_,&viewProjection_);
+	player_->Initialize(model_,textureHandle_,&viewProjection_,PlayerPotision);
 	
 	viewProjection_.Initialize();
 
@@ -46,8 +51,7 @@ void GameScene::Initialize() {
 	modelSkydome_ = Model::CreateFromOBJ("SkyDome", true);
 	tenkyu_->Initialize(modelSkydome_,textureHandle_,&viewProjection_);
 	
-	mapChipField_ = new MapChipField;
-	mapChipField_->LoadMapChipCsv("Resources/blocks.csv");
+
 	GenerateBlocks();
 
 }
@@ -82,7 +86,6 @@ void GameScene::Update() { player_->Update();
 	}
 
 	debugCamera_->Update();
-
 	tenkyu_->Updata();
 }
 
@@ -119,8 +122,10 @@ void GameScene::Draw() {
 				continue;
 			}
 			block_->Draw(*worldTransformBlock, viewProjection_);
+			
 		}
 	}
+	player_->Draw();
 	tenkyu_->Draw();
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

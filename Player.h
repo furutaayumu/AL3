@@ -1,6 +1,6 @@
-#include "Model.h"
-#include "WorldTransform.h"
-#include "MathUtilityForText.h"
+	#include "Model.h"
+	#include "WorldTransform.h"
+	#include "MathUtilityForText.h"
 #pragma once
 class Player {
 public:
@@ -10,13 +10,18 @@ public:
 
 	void Draw();
 
+	const WorldTransform& GetWorldTransform() const { return worldTransform_; }
+
 private:
 	enum class LRDirection {
 		kRight,
 		kLeft,
 	};
 
+
 	LRDirection lrDirection_ = LRDirection::kRight;
+
+	
 
 	WorldTransform worldTransform_;
 	ViewProjection* viewProjection_ = nullptr;
@@ -40,4 +45,6 @@ private:
 	static inline const float kGravityAcceleration = 0.05f;
 	static inline const float kLimitFallSpeed = 0.5f;
 	static inline const float kJumpAcceleration = 0.5f;
+
+
 };

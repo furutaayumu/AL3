@@ -1,3 +1,5 @@
+#define NOMINMAX
+#define NOMINMIN
 #include "GameScene.h"
 #include "TextureManager.h"
 #include <cassert>
@@ -5,6 +7,7 @@
 #include "PrimitiveDrawer.h"
 #include "MathUtilityForText.h"
 #include "MapChipField.h"
+
 
 
 GameScene::GameScene() {}
@@ -16,6 +19,7 @@ GameScene::~GameScene() {
 	delete debugCamera_;
 	delete tenkyu_;
 	delete mapChipField_;
+	delete cameraController_;
 
 for (std::vector<WorldTransform*>& worldTransformBlockLine : worldTransformBlocks_) {
 		for (WorldTransform* worldTransformBlcok : worldTransformBlockLine) {
@@ -51,6 +55,15 @@ void GameScene::Initialize() {
 	modelSkydome_ = Model::CreateFromOBJ("SkyDome", true);
 	tenkyu_->Initialize(modelSkydome_,textureHandle_,&viewProjection_);
 	
+	cameraController_ = new CameraController();
+	cameraController_->Initialize();
+	cameraController_->setTarget(player_);
+	cameraController_->Reset();
+
+	CameraController::Rect cameraArea = {12.0f, 100 - 12.0f, 6.0f, 6.0f};
+	cameraController_->setMovableAre(cameraArea);
+
+
 
 	GenerateBlocks();
 
@@ -82,10 +95,13 @@ void GameScene::Update() { player_->Update();
 		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
 		viewProjection_.TransferMatrix();
 	} else {
-		viewProjection_.UpdateMatrix();
+		viewProjection_.matView = cameraController_->GetViewProjection().matView;
+		viewProjection_.matProjection = cameraController_->GetViewProjection().matProjection;
+		viewProjection_.TransferMatrix();
 	}
 
 	debugCamera_->Update();
+	cameraController_->Update();
 	tenkyu_->Updata();
 }
 

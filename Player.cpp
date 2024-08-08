@@ -75,7 +75,7 @@ void Player::Update() {
 			velocity_.x = std::clamp(velocity_.x, -kLimitRunSpeed, kLimitRunSpeed);
 		}
 	    if (Input::GetInstance()->PushKey(DIK_UP)) {
-		    velocity_ = Vector3(0, kJumpAcceleration, 0);
+		    velocity_ += Vector3(0, kJumpAcceleration, 0);
 	    }
 	} else {
 		velocity_ += Vector3(0, -kGravityAcceleration, 0);

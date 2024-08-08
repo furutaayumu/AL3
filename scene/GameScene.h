@@ -12,6 +12,7 @@
 #include "DebugCamera.h"
 #include "Tenkyu.h"
 #include "MapChipField.h"
+#include "CameraController.h"
 
 /// <summary>
 /// ゲームシーン
@@ -73,6 +74,8 @@ private: // メンバ変数
 	bool isDebugCameraActive_ = false;
 
 	DebugCamera* debugCamera_ = nullptr;
+
+	CameraController* cameraController_ = nullptr;
 
 	//マップチップ
 	MapChipField* mapChipField_;
